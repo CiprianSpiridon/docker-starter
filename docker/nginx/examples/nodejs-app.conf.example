@@ -1,0 +1,12 @@
+upstream node-api {
+    server api_node_1:6666 weight=1 max_fails=3 fail_timeout=30s;
+    server api_node_2:6666 weight=1 max_fails=3 fail_timeout=30s;
+}
+
+server {
+    listen 80;
+    server_name api.sample.test;
+    location / {
+          proxy_pass http://node-api;
+        }
+}
